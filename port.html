@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stephen Mathew — Web Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#ffffff;--bg2:#f7f8fc;--card:#ffffff;--border:#e4e7ef;--accent:#5b4de8;--accent2:#7c6af7;--teal:#0d9488;--pink:#db2777;--text:#1a1a2e;--muted:#6b7280;--white:#ffffff;--shadow:0 2px 16px rgba(80,80,160,.07)}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+    /* NAV */
+    nav{position:fixed;top:0;width:100%;z-index:100;padding:1.1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 1px 12px rgba(0,0,0,.06)}
+    .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
+    .nav-links a:hover{color:var(--accent)}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;background:linear-gradient(160deg,#f0eeff 0%,#e8f9f7 50%,#fff 100%)}
+    .hero-blob1{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(91,77,232,.12) 0%,transparent 70%);top:10%;left:-100px;pointer-events:none}
+    .hero-blob2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(13,148,136,.1) 0%,transparent 70%);bottom:5%;right:-80px;pointer-events:none}
+    .hero-inner{max-width:800px;text-align:center;position:relative;z-index:1}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(91,77,232,.08);border:1px solid rgba(91,77,232,.2);border-radius:2rem;padding:.4rem 1.1rem;font-size:.78rem;font-weight:600;color:var(--accent);margin-bottom:1.8rem;letter-spacing:.06em;text-transform:uppercase}
+    .hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.8rem,7vw,5rem);font-weight:700;line-height:1.08;letter-spacing:-.03em;color:var(--text);margin-bottom:.5rem}
+    .hero h1 .highlight{background:linear-gradient(135deg,var(--accent) 0%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:1.15rem;color:var(--muted);margin:1.2rem 0 2.5rem;font-weight:400}
+    .hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .btn-primary{padding:.8rem 1.8rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:.6rem;font-size:.95rem;font-weight:600;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 18px rgba(91,77,232,.3)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(91,77,232,.4)}
+    .btn-outline{padding:.8rem 1.8rem;background:transparent;color:var(--accent);border:1.5px solid var(--accent);border-radius:.6rem;font-size:.95rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+    .btn-outline:hover{background:var(--accent);color:#fff}
+
+    /* SECTIONS */
+    section{padding:5rem 2rem;position:relative;z-index:1}
+    .container{max-width:1000px;margin:0 auto}
+    .section-label{display:inline-flex;align-items:center;gap:.5rem;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8rem}
+    .section-label::before{content:'';display:block;width:22px;height:2.5px;background:linear-gradient(90deg,var(--accent),var(--teal));border-radius:2px}
+    .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.3rem);font-weight:700;color:var(--text);margin-bottom:2.8rem;line-height:1.2}
+    #about,#education,#languages,#contact{background:var(--bg2)}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:center}
+    .about-avatar{width:100%;aspect-ratio:1;border-radius:1.5rem;background:linear-gradient(135deg,rgba(91,77,232,.1),rgba(13,148,136,.08));border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:5.5rem;max-width:240px;box-shadow:var(--shadow)}
+    .about-text p{color:var(--muted);margin-bottom:1.2rem;font-size:1rem;line-height:1.85}
+    .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+    .stat-box{background:var(--white);border:1.5px solid var(--border);border-radius:.9rem;padding:1.1rem;text-align:center;box-shadow:var(--shadow)}
+    .stat-num{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .stat-label{font-size:.75rem;color:var(--muted);margin-top:.2rem;font-weight:500}
+
+    /* SKILLS */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+    .skill-card{background:var(--white);border:1.5px solid var(--border);border-radius:1rem;padding:1.8rem;transition:border-color .3s,transform .2s,box-shadow .3s;box-shadow:var(--shadow)}
+    .skill-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 30px rgba(91,77,232,.12)}
+    .skill-card-icon{width:46px;height:46px;border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem}
+    .icon-purple{background:rgba(91,77,232,.1)}
+    .icon-teal{background:rgba(13,148,136,.1)}
+    .icon-pink{background:rgba(219,39,119,.1)}
+    .skill-card h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.8rem}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+    .tag{background:#f3f4f8;border:1px solid var(--border);border-radius:.4rem;padding:.28rem .7rem;font-size:.78rem;color:var(--muted);font-weight:500;transition:all .2s}
+    .tag:hover{border-color:var(--accent);color:var(--accent);background:rgba(91,77,232,.06)}
+
+    /* TIMELINE */
+    .timeline{position:relative;padding-left:2.2rem}
+    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2.5px;background:linear-gradient(to bottom,var(--accent),var(--teal),rgba(91,77,232,.1));border-radius:2px}
+    .timeline-item{position:relative;margin-bottom:2.5rem}
+    .timeline-dot{position:absolute;left:-2.55rem;top:.35rem;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--bg2);box-shadow:0 0 0 3px rgba(91,77,232,.2)}
+    .timeline-card{background:var(--white);border:1.5px solid var(--border);border-radius:1rem;padding:1.8rem;box-shadow:var(--shadow)}
+    .timeline-date{font-size:.78rem;color:var(--accent);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.5rem}
+    .timeline-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text)}
+    .timeline-card .inst{color:var(--teal);font-weight:600;margin:.3rem 0 .8rem;font-size:.95rem}
+    .timeline-card p{color:var(--muted);font-size:.9rem}
+
+    /* CERTS */
+    .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+    .cert-card{background:var(--white);border:1.5px solid var(--border);border-radius:1rem;padding:1.8rem;display:flex;gap:1.2rem;align-items:flex-start;transition:all .3s;box-shadow:var(--shadow)}
+    .cert-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:0 8px 30px rgba(13,148,136,.12)}
+    .cert-icon{width:50px;height:50px;border-radius:.9rem;flex-shrink:0;background:rgba(13,148,136,.1);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+    .cert-info h3{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
+    .cert-info .issuer{color:var(--teal);font-size:.85rem;font-weight:600}
+    .cert-info .cert-date{color:var(--muted);font-size:.8rem;margin-top:.3rem}
+
+    /* LANGUAGES */
+    .lang-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+    .lang-card{background:var(--white);border:1.5px solid var(--border);border-radius:1rem;padding:1.8rem;box-shadow:var(--shadow)}
+    .lang-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+    .lang-level-badge{display:inline-block;padding:.22rem .8rem;border-radius:2rem;font-size:.74rem;font-weight:700;margin-bottom:1.2rem}
+    .native{background:rgba(91,77,232,.1);color:var(--accent)}
+    .proficient{background:rgba(13,148,136,.1);color:var(--teal)}
+    .basic{background:rgba(219,39,119,.1);color:var(--pink)}
+    .lang-skills{display:flex;flex-direction:column;gap:.7rem}
+    .lang-skill-row{display:flex;align-items:center}
+    .lang-skill-name{font-size:.8rem;color:var(--muted);width:70px;font-weight:500}
+    .lang-skill-bar{flex:1;height:5px;background:#e9ecef;border-radius:3px;margin:0 .9rem}
+    .lang-skill-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--teal))}
+    .lang-skill-val{font-size:.75rem;color:var(--accent);font-weight:700;width:24px;text-align:right}
+
+    /* PROJECTS */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+    .project-card{background:var(--white);border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .3s;box-shadow:var(--shadow)}
+    .project-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(91,77,232,.13);border-color:var(--accent)}
+    .project-top{padding:1.8rem 1.8rem 1rem;background:linear-gradient(135deg,rgba(91,77,232,.05),rgba(13,148,136,.04))}
+    .project-icon{font-size:2.2rem;margin-bottom:.8rem}
+    .project-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+    .project-card p{color:var(--muted);font-size:.87rem;line-height:1.6}
+    .project-bottom{padding:.8rem 1.8rem 1.4rem;display:flex;flex-wrap:wrap;gap:.4rem}
+
+    /* INTERESTS */
+    .interests-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem}
+    .interest-item{background:var(--white);border:1.5px solid var(--border);border-radius:.9rem;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:.9rem;transition:all .3s;box-shadow:var(--shadow)}
+    .interest-item:hover{border-color:var(--accent);box-shadow:0 4px 18px rgba(91,77,232,.1)}
+    .interest-item span:first-child{font-size:1.4rem}
+    .interest-item p{font-size:.84rem;color:var(--muted);font-weight:500}
+
+    /* CONTACT */
+    .contact-inner{max-width:620px;margin:0 auto;text-align:center}
+    .contact-inner > p{color:var(--muted);font-size:1rem}
+    .contact-cards{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.5rem}
+    .contact-card{background:var(--white);border:1.5px solid var(--border);border-radius:1rem;padding:1.2rem 1.8rem;display:flex;align-items:center;gap:.9rem;text-decoration:none;color:var(--text);transition:all .3s;box-shadow:var(--shadow)}
+    .contact-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 28px rgba(91,77,232,.15)}
+    .cc-icon{font-size:1.4rem}
+    .cc-label{font-size:.73rem;color:var(--muted);font-weight:500}
+    .cc-val{font-size:.9rem;font-weight:600;color:var(--text)}
+
+    /* FOOTER */
+    footer{text-align:center;padding:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border);background:var(--bg2)}
+
+    @media(max-width:768px){.about-grid{grid-template-columns:1fr}.about-avatar{max-width:180px;margin:0 auto}}
+    @media(max-width:480px){.nav-links{display:none}}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">SM</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-blob1"></div>
+    <div class="hero-blob2"></div>
+    <div class="hero-inner">
+      <div class="hero-badge"><div class="hero-badge-dot"></div> Available for opportunities</div>
+      <h1>Stephen <span class="highlight">Mathew</span></h1>
+      <p class="hero-sub">Web Developer &amp; Information Systems Student · Riga, Latvia</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Get in touch</a>
+        <a href="#skills" class="btn-outline">View my skills</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div><div class="about-avatar">👨‍💻</div></div>
+        <div class="about-text">
+          <div class="section-label">About Me</div>
+          <h2 class="section-title" style="margin-bottom:1.2rem">Building the web,<br/>one line at a time.</h2>
+          <p>I'm an Information Systems undergraduate at Riga Nordic University with hands-on experience building responsive web applications and integrating backend services using Firebase.</p>
+          <p>Proficient in JavaScript development and systematic problem-solving — dependable, detail-oriented, and motivated to contribute within technology-focused teams.</p>
+          <div class="about-stats">
+            <div class="stat-box"><div class="stat-num">2+</div><div class="stat-label">Years Coding</div></div>
+            <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Languages</div></div>
+            <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">IBM Certs</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">What I know</div>
+      <h2 class="section-title">Skills &amp; Competencies</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-icon icon-purple">🌐</div>
+          <h3>Frontend Development</h3>
+          <div class="skill-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+            <span class="tag">Responsive Design</span><span class="tag">Git &amp; GitHub</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon icon-teal">🔥</div>
+          <h3>Backend &amp; Database</h3>
+          <div class="skill-tags">
+            <span class="tag">Firebase Auth</span><span class="tag">Firestore</span>
+            <span class="tag">Database Design</span><span class="tag">Basic Networking</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon icon-pink">🧠</div>
+          <h3>Core IT Competencies</h3>
+          <div class="skill-tags">
+            <span class="tag">Documentation</span><span class="tag">Systems Architecture</span>
+            <span class="tag">Problem Analysis</span><span class="tag">Software Testing</span><span class="tag">Debugging</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" style="background:var(--bg2)">
+    <div class="container">
+      <div class="section-label">What I've built</div>
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-top">
+            <div class="project-icon">🔐</div>
+            <h3>Firebase Auth App</h3>
+            <p>A responsive web application with full user authentication, registration, and login powered by Firebase Authentication and Firestore.</p>
+          </div>
+          <div class="project-bottom">
+            <span class="tag">JavaScript</span><span class="tag">Firebase</span><span class="tag">HTML/CSS</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-top">
+            <div class="project-icon">📱</div>
+            <h3>Responsive Web UI</h3>
+            <p>A fully responsive, mobile-first web interface built with vanilla HTML, CSS, and JavaScript following modern design principles.</p>
+          </div>
+          <div class="project-bottom">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-top">
+            <div class="project-icon">🗄️</div>
+            <h3>Firestore Data Manager</h3>
+            <p>A CRUD web app integrated with Firestore for real-time data storage, retrieval, and management with a clean user interface.</p>
+          </div>
+          <div class="project-bottom">
+            <span class="tag">Firestore</span><span class="tag">JavaScript</span><span class="tag">Firebase</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="container">
+      <div class="section-label">Academic Background</div>
+      <h2 class="section-title">Education &amp; Training</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">Aug 2023 — Present</div>
+            <h3>Bachelor's in Information Systems</h3>
+            <p class="inst">Riga Nordic University — Riga, Latvia</p>
+            <p>Engineering field of study focusing on information systems design, web technologies, databases, and software development principles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="container">
+      <div class="section-label">Credentials</div>
+      <h2 class="section-title">Certifications</h2>
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-icon">🤖</div>
+          <div class="cert-info">
+            <h3>AI Fundamentals: Language and Vision in AI</h3>
+            <div class="issuer">IBM</div>
+            <div class="cert-date">Issued February 2026 · Online</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">💼</div>
+          <div class="cert-info">
+            <h3>AI-Enabled Applications for Customer Service</h3>
+            <div class="issuer">IBM</div>
+            <div class="cert-date">Issued March 2026 · Online</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section id="languages">
+    <div class="container">
+      <div class="section-label">Communication</div>
+      <h2 class="section-title">Language Proficiency</h2>
+      <div class="lang-grid">
+        <div class="lang-card">
+          <h3>Malayalam</h3>
+          <span class="lang-level-badge native">Native</span>
+          <div class="lang-skills">
+            <div class="lang-skill-row"><span class="lang-skill-name">All skills</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:100%"></div></div><span class="lang-skill-val">C2</span></div>
+          </div>
+        </div>
+        <div class="lang-card">
+          <h3>English</h3>
+          <span class="lang-level-badge proficient">C1–C2 Proficient</span>
+          <div class="lang-skills">
+            <div class="lang-skill-row"><span class="lang-skill-name">Listening</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:100%"></div></div><span class="lang-skill-val">C2</span></div>
+            <div class="lang-skill-row"><span class="lang-skill-name">Reading</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:100%"></div></div><span class="lang-skill-val">C2</span></div>
+            <div class="lang-skill-row"><span class="lang-skill-name">Writing</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:83%"></div></div><span class="lang-skill-val">B2</span></div>
+            <div class="lang-skill-row"><span class="lang-skill-name">Speaking</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:91%"></div></div><span class="lang-skill-val">C1</span></div>
+          </div>
+        </div>
+        <div class="lang-card">
+          <h3>Hindi</h3>
+          <span class="lang-level-badge basic">A2–B1 Basic</span>
+          <div class="lang-skills">
+            <div class="lang-skill-row"><span class="lang-skill-name">Listening</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:33%"></div></div><span class="lang-skill-val">A2</span></div>
+            <div class="lang-skill-row"><span class="lang-skill-name">Reading</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:33%"></div></div><span class="lang-skill-val">A2</span></div>
+            <div class="lang-skill-row"><span class="lang-skill-name">Writing</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:33%"></div></div><span class="lang-skill-val">A2</span></div>
+            <div class="lang-skill-row"><span class="lang-skill-name">Speaking</span><div class="lang-skill-bar"><div class="lang-skill-fill" style="width:50%"></div></div><span class="lang-skill-val">B1</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERESTS -->
+  <section id="interests">
+    <div class="container">
+      <div class="section-label">What drives me</div>
+      <h2 class="section-title">Interests</h2>
+      <div class="interests-grid">
+        <div class="interest-item"><span>🚀</span><p>Emerging technologies &amp; digital tools</p></div>
+        <div class="interest-item"><span>⚙️</span><p>Designing &amp; optimizing software</p></div>
+        <div class="interest-item"><span>🧩</span><p>Systems thinking &amp; problem-solving</p></div>
+        <div class="interest-item"><span>📈</span><p>Continuous improvement</p></div>
+        <div class="interest-item"><span>🎨</span><p>User-centered digital experiences</p></div>
+        <div class="interest-item"><span>🤖</span><p>Artificial Intelligence &amp; ML</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="section-label">Get in touch</div>
+        <h2 class="section-title">Let's connect</h2>
+        <p>Open to opportunities, collaborations, or just a friendly chat about tech. Feel free to reach out!</p>
+        <div class="contact-cards">
+          <a href="mailto:stephenmathew203@gmail.com" class="contact-card">
+            <span class="cc-icon">✉️</span>
+            <div><div class="cc-label">Email</div><div class="cc-val">stephenmathew203@gmail.com</div></div>
+          </a>
+          <a href="tel:+37122451360" class="contact-card">
+            <span class="cc-icon">📞</span>
+            <div><div class="cc-label">Phone</div><div class="cc-val">(+371) 22451360</div></div>
+          </a>
+          <div class="contact-card" style="cursor:default">
+            <span class="cc-icon">📍</span>
+            <div><div class="cc-label">Location</div><div class="cc-val">Riga, Latvia</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Stephen Mathew · Built with passion ✦ Riga, Latvia</p>
+  </footer>
+
+</body>
+</html>
